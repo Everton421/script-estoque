@@ -4,99 +4,12 @@ import { PrismaClient } from '@prisma/client'
 const mysql = require('mysql')
 var cron = require('node-cron');
 const prisma = new PrismaClient();
+import { vendas,vendas3,vendas4, vendas5 } from './conexao';
+import { publico,publico3,publico4, publico5 } from './conexao';
+import { estoque,estoque3,estoque4, estoque5} from './conexao';
+import { con, con3,con4,con5 } from './conexao';
 
 
-                var estoque:string = "space_eletro_estoque";
-                var vendas:string ="space_eletro_vendas";
-                var publico:string = "space_eletro_publico";
-
-                var con:any = mysql.createPool({
-                    connectionLimit : 10,
-                    host: "179.184.9.227",
-                    user: "intersig",
-                    port:'3110',
-                    password: "Nileduz",
-                    database: estoque,
-                    database2: publico,
-                    database3: vendas,
-                })
-
-                 /*   var estoque2:string = "testeestoque_estoque";
-                    var vendas2:string ="testeestoque_vendas";
-                    var publico2:string = "testeestoque_publico";
-
-                    var con2:any = mysql.createPool({
-                    connectionLimit : 10,
-                        host: "server.intersig.com.br",
-                        user: "intersig",
-                        password: "Ganapataye",
-                        database: estoque2,
-                        database2: publico2,
-                        database3: vendas2,
-                    })
-*/
-                var estoque3:string = "eletrodigital_estoque";
-                var vendas3:string ="eletrodigital_vendas";
-                var publico3:string = "eletrodigital_publico";
-
-                var con3:any = mysql.createPool({
-                connectionLimit : 10,
-                host: "server.intersig.com.br",
-                user: "intersig",
-                port:'3306',
-                password: "Ganapataye",
-                database: estoque3,
-                database2: publico3,
-                database3: vendas3,
-                })
-
-
-                var estoque4:string = "filialsc_estoque";
-                var vendas4:string ="filialsc_vendas";
-                var publico4:string = "filialsc_publico";
-
-                var con4:any = mysql.createPool({
-                connectionLimit : 10,
-                host: "server.intersig.com.br",
-                user: "intersig",
-                port:'3306',
-                password: "Ganapataye",
-                database: estoque4,
-                database2: publico4,
-                database3: vendas4,
-                })
-
-                var estoque5:string = "digital_estoque";
-                var vendas5:string ="digital_vendas";
-                var publico5:string = "digital_publico";
-
-                var con5:any = mysql.createPool({
-                connectionLimit : 10,
-                host: "179.184.11.220",
-                user: "intersig",
-                port:'3307',
-                password: "Nileduz",
-                database: estoque5,
-                database2: publico5,
-                database3: vendas5,
-                })
-
-            /*
-                var estoque6:string = "eletrogold_estoque";
-                var vendas6:string ="eletrogold_vendas";
-                var publico6:string = "eletrogold_publico";
-
-                var con6:any = mysql.createPool({
-                connectionLimit : 10,
-                host: "177.125.218.237",
-                user: "intersig",
-                port:'3306',
-                password: "Ganapataye",
-                database: estoque6,
-                database2: publico6,
-                database3: vendas6,
-                })
-*/
 
         
 const funcaomain = async function execute() {
