@@ -40,88 +40,10 @@ var client_1 = require("@prisma/client");
 var mysql = require('mysql');
 var cron = require('node-cron');
 var prisma = new client_1.PrismaClient();
-var estoque = "space_eletro_estoque";
-var vendas = "space_eletro_vendas";
-var publico = "space_eletro_publico";
-var con = mysql.createPool({
-    connectionLimit: 10,
-    host: "179.184.9.227",
-    user: "intersig",
-    port: '3110',
-    password: "Nileduz",
-    database: estoque,
-    database2: publico,
-    database3: vendas,
-});
-/*   var estoque2:string = "testeestoque_estoque";
-   var vendas2:string ="testeestoque_vendas";
-   var publico2:string = "testeestoque_publico";
-
-   var con2:any = mysql.createPool({
-   connectionLimit : 10,
-       host: "server.intersig.com.br",
-       user: "intersig",
-       password: "Ganapataye",
-       database: estoque2,
-       database2: publico2,
-       database3: vendas2,
-   })
-*/
-var estoque3 = "eletrodigital_estoque";
-var vendas3 = "eletrodigital_vendas";
-var publico3 = "eletrodigital_publico";
-var con3 = mysql.createPool({
-    connectionLimit: 10,
-    host: "server.intersig.com.br",
-    user: "intersig",
-    port: '3306',
-    password: "Ganapataye",
-    database: estoque3,
-    database2: publico3,
-    database3: vendas3,
-});
-var estoque4 = "filialsc_estoque";
-var vendas4 = "filialsc_vendas";
-var publico4 = "filialsc_publico";
-var con4 = mysql.createPool({
-    connectionLimit: 10,
-    host: "server.intersig.com.br",
-    user: "intersig",
-    port: '3306',
-    password: "Ganapataye",
-    database: estoque4,
-    database2: publico4,
-    database3: vendas4,
-});
-var estoque5 = "digital_estoque";
-var vendas5 = "digital_vendas";
-var publico5 = "digital_publico";
-var con5 = mysql.createPool({
-    connectionLimit: 10,
-    host: "179.184.11.220",
-    user: "intersig",
-    port: '3307',
-    password: "Nileduz",
-    database: estoque5,
-    database2: publico5,
-    database3: vendas5,
-});
-/*
-    var estoque6:string = "eletrogold_estoque";
-    var vendas6:string ="eletrogold_vendas";
-    var publico6:string = "eletrogold_publico";
-
-    var con6:any = mysql.createPool({
-    connectionLimit : 10,
-    host: "177.125.218.237",
-    user: "intersig",
-    port:'3306',
-    password: "Ganapataye",
-    database: estoque6,
-    database2: publico6,
-    database3: vendas6,
-    })
-*/
+var conexao_1 = require("./conexao");
+var conexao_2 = require("./conexao");
+var conexao_3 = require("./conexao");
+var conexao_4 = require("./conexao");
 var funcaomain = function execute() {
     return __awaiter(this, void 0, void 0, function () {
         var resposta1, err_1, resposta5, err_2, resposta4, err_3, resposta3, err_4, ProdSku, _loop_1, i, productsResposta1, productsResposta3, productsResposta4, productsResposta5, _loop_2, i;
@@ -129,7 +51,7 @@ var funcaomain = function execute() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, queryProd(con, vendas, estoque, publico)];
+                    return [4 /*yield*/, queryProd(conexao_4.con, conexao_1.vendas, conexao_3.estoque, conexao_2.publico)];
                 case 1:
                     resposta1 = _a.sent();
                     return [3 /*break*/, 3];
@@ -139,7 +61,7 @@ var funcaomain = function execute() {
                     return [3 /*break*/, 3];
                 case 3:
                     _a.trys.push([3, 5, , 6]);
-                    return [4 /*yield*/, queryProd(con5, vendas5, estoque5, publico5)];
+                    return [4 /*yield*/, queryProd(conexao_4.con5, conexao_1.vendas5, conexao_3.estoque5, conexao_2.publico5)];
                 case 4:
                     resposta5 = _a.sent();
                     return [3 /*break*/, 6];
@@ -149,7 +71,7 @@ var funcaomain = function execute() {
                     return [3 /*break*/, 6];
                 case 6:
                     _a.trys.push([6, 8, , 9]);
-                    return [4 /*yield*/, queryProd(con4, vendas4, estoque4, publico4)];
+                    return [4 /*yield*/, queryProd(conexao_4.con4, conexao_1.vendas4, conexao_3.estoque4, conexao_2.publico4)];
                 case 7:
                     resposta4 = _a.sent();
                     return [3 /*break*/, 9];
@@ -159,7 +81,7 @@ var funcaomain = function execute() {
                     return [3 /*break*/, 9];
                 case 9:
                     _a.trys.push([9, 11, , 12]);
-                    return [4 /*yield*/, queryProd(con3, vendas3, estoque3, publico3)];
+                    return [4 /*yield*/, queryProd(conexao_4.con3, conexao_1.vendas3, conexao_3.estoque3, conexao_2.publico3)];
                 case 10:
                     resposta3 = _a.sent();
                     return [3 /*break*/, 12];
@@ -243,7 +165,7 @@ var funcaomain = function execute() {
                             saldo += prodEmpresa5.ESTOQUE;
                         }
                         try {
-                            updateProd(con, estoque, saldo, prodEmpresa1.SKU);
+                            updateProd(conexao_4.con, conexao_3.estoque, saldo, prodEmpresa1.SKU);
                         }
                         catch (err) {
                             console.log(err + " erro ao atualizar saldo do produto");
