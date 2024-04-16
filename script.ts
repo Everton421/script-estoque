@@ -1,6 +1,5 @@
 
 import { PrismaClient } from '@prisma/client'
-
 const mysql = require('mysql')
 var cron = require('node-cron');
 const prisma = new PrismaClient();
@@ -42,24 +41,15 @@ const funcaomain = async function execute() {
         const codigoProduto = resposta1[i].CODIGO
         const SkuProduto = resposta1[i].SKU
 
-        if (aux) {
+        if (!aux) {
 
-          try{
-            updateSku(codigoProduto, SkuProduto);
-            console.log(`update :${resposta1[i].CODIGO} sku: ${resposta1[i].SKU}`)
-          }catch(err){
-              console.log(err+` erro ao atualizar  o produto`)
-           }
-           
-        } else {
             try{
-                addSku(codigoProduto, SkuProduto)
+            cadastraProduto(con,codigoProduto,  SkuProduto);
                 console.log(`cadastrando produto :${codigoProduto} sku: ${SkuProduto} `)
             }catch(err){ 
                 console.log(err+ ` erro ao cadastrar o produto`)
             }
           }
-        //const aux2 = ProdSku.find((item: any) => item.CODIGO !== resposta1[i].CODIGO);
       }
 
   const productsResposta1 = resposta1.filter((item: any) => {
@@ -132,24 +122,16 @@ const funcaomain = async function execute() {
                             });
 
 
-/*______________atualiza o sku dos produtos______________*/ 
-        async function updateSku(codigoProduto: number, skuProduto: string) {
-          await prisma.prod_saldo.update({
-            where: { CODIGO: codigoProduto },
-            data: {
-              SKU: skuProduto,
-            },
-          });
-    }
 
-  /*______________cdastra produto na tabela prod_saldo ______________*/ 
-      async function addSku(codigoProduto:number,skuProduto:string){
-        await prisma.prod_saldo.create({
-          data: {
-            CODIGO: codigoProduto,
-            SKU: skuProduto,
-          },
-        })
+
+      async function cadastraProduto(con:any,codigo:any, sku:any){
+        let sql = `INSERT INTO ${estoque}.prod_saldo (CODIGO, SKU) VALUES (?, ?) ON DUPLICATE KEY UPDATE SKU = ?`;
+          await con.query(sql, [codigo, sku, sku], (err: any, response: any) => {
+            if (err) {
+              console.log(err, "erro ao cadastrar o produto");
+            }
+          })
+
       }
 
 /*______________consulta a tabela prodsaldo devolvendo todos os valores______________*/ 
