@@ -96,18 +96,9 @@ var funcaomain = function execute() {
                         var aux = ProdSku.some(function (item) { return item.CODIGO === resposta1[i].CODIGO; });
                         var codigoProduto = resposta1[i].CODIGO;
                         var SkuProduto = resposta1[i].SKU;
-                        if (aux) {
+                        if (!aux) {
                             try {
-                                updateSku(codigoProduto, SkuProduto);
-                                console.log("update :".concat(resposta1[i].CODIGO, " sku: ").concat(resposta1[i].SKU));
-                            }
-                            catch (err) {
-                                console.log(err + " erro ao atualizar  o produto");
-                            }
-                        }
-                        else {
-                            try {
-                                addSku(codigoProduto, SkuProduto);
+                                cadastraProduto(conexao_4.con, codigoProduto, SkuProduto);
                                 console.log("cadastrando produto :".concat(codigoProduto, " sku: ").concat(SkuProduto, " "));
                             }
                             catch (err) {
@@ -194,35 +185,18 @@ cron.schedule('*/1 * * * *', function () { return __awaiter(void 0, void 0, void
         }
     });
 }); });
-/*______________atualiza o sku dos produtos______________*/
-function updateSku(codigoProduto, skuProduto) {
+function cadastraProduto(con, codigo, sku) {
     return __awaiter(this, void 0, void 0, function () {
+        var sql;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.prod_saldo.update({
-                        where: { CODIGO: codigoProduto },
-                        data: {
-                            SKU: skuProduto,
-                        },
-                    })];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-/*______________cdastra produto na tabela prod_saldo ______________*/
-function addSku(codigoProduto, skuProduto) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.prod_saldo.create({
-                        data: {
-                            CODIGO: codigoProduto,
-                            SKU: skuProduto,
-                        },
-                    })];
+                case 0:
+                    sql = "INSERT INTO ".concat(conexao_3.estoque, ".prod_saldo (CODIGO, SKU) VALUES (?, ?) ON DUPLICATE KEY UPDATE SKU = ?");
+                    return [4 /*yield*/, con.query(sql, [codigo, sku, sku], function (err, response) {
+                            if (err) {
+                                console.log(err, "erro ao cadastrar o produto");
+                            }
+                        })];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
